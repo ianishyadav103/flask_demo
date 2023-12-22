@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block search %}
+<form class="d-flex" method="get" accept="/search/title">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+{% endblock %}
+
+
+
+{% block body %}
+<div class="container bg-dark bg-gradient text-light p-4">
+    <h2>Your Todos</h2>
+    <div>
+
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Note</th>
+                    <th scope="col">DateTime</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Operations</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in all_todo %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ todo.title }}</td>
+                    <td>{{ todo.desc }}</td>
+                    <td>{{ todo.date_created }}</td>
+                    <td><input type="checkbox" {{ 'checked' if todo.status }}
+                            onchange="operation(event,'e','{{ todo.sno }}')"
+                            aria-label="Checkbox for following text input"></td>
+                    <td><button type="button" class="btn btn-danger btn-sm"
+                            onclick="operation(event,'d','{{ todo.sno }}')">Delete</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+
+<script>
+    function operation(e, op, id) {
+
+        let data = 'd';
+        if (op === 'e') {
+            data = 'e0'
+            if (e.target.checked) {
+
+                data = 'e1'
+            }
+            e.target.checked = !(e.target.checked)
+        }
+        fetch(`/task/${data}/${id}`)
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                return response.json();
+            })
+            .then(data => {
+                let x = data['data'];
+                if (x === 'd') {
+                    e.target.parentElement.parentElement.remove()
+                }
+                else if (x === 'e') {
+                    e.target.checked = !(e.target.checked)
+                }
+                else {
+                    throw new Error('Some Error Occured');
+                }
+            })
+            .catch(error => {
+                // Log any errors that occurred during the fetch
+                alert(error);
+            });
+    }
+</script>
+
+{% endblock %}

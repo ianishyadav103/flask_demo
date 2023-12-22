@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+<div class="container bg-dark bg-gradient text-light p-4">
+
+  <h2 class="text-center">Sign Up</h2>
+  <form method="post" action="/signupx">
+    {{ formx.csrf_token }} <!-- CSRF  -->
+    {% if formx.csrf_token.errors %}
+    <ul>
+      {% for error in formx.csrf_token.errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="mb-3">
+      {{ formx.email.label(class='form-label') }}
+      {{ formx.email(class='form-control',id='exampleInputEmail1') }}
+
+      <!-- form validation errors from backend -->
+      {% if formx.email.errors %}
+      <ul>
+        {% for error in formx.email.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    <div class="mb-3">
+      {{ formx.name.label }}
+      {{ formx.name(class='form-control') }}
+
+
+      {% if formx.name.errors %}
+      <ul>
+        {% for error in formx.name.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    <div class="mb-3">
+      {{ formx.password.label }}
+      {{ formx.password(class='form-control') }}
+
+
+      {% if formx.password.errors %}
+      <ul>
+        {% for error in formx.password.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+</div>
+{% endblock %}

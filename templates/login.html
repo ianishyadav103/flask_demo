@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+<div class="container bg-dark bg-gradient text-light p-4">
+  <h2 class="text-center">Login</h2>
+  <form method="post" action="/login_p">
+    
+    <!-- adding csrf in not flask form -->
+    <input id="csrf_token" name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp"
+        required>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" name="password" id="exampleInputPassword1" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+{% endblock %}

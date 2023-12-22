@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+<div class="container bg-dark bg-gradient text-light p-4">
+    <h2>Add a Todo(Visited:{{ youvisited }})</h2>
+    <form action="/savenotes" method="post">
+      <!-- adding csrf in not flask form -->
+    <input id="csrf_token" name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+        <div class="mb-3">
+            <label for="exampleInputText1" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" aria-describedby="TextHelp" required>
+          </div>
+        <div class="mb-3">
+            <label  for="exampleInputText1" class="form-label">Descriptiom</label>
+            <input type="text" class="form-control" id="desc" name="desc" aria-describedby="TextHelp" required>
+          </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script>
+
+</script>
+{% endblock %}
